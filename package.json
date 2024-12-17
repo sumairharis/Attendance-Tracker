@@ -1,0 +1,17 @@
+
+{
+  "name": "tracker-app",
+  "version": "1.0.0",
+  "description": "Tracker Attendance App with MongoDB and Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.1"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}

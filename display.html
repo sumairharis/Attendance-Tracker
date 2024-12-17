@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            display: none;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        #loadButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Attendance Records</h1>
+    <button id="loadButton">Load Data</button>
+
+    <table id="recordsTable">
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody id="records">
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('loadButton').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/records');
+                const data = await response.json();
+
+                const recordsTable = document.getElementById('records');
+                const table = document.getElementById('recordsTable');
+                recordsTable.innerHTML = '';
+
+                if (data.length === 0) {
+                    alert('No records found.');
+                    return;
+                }
+
+                data.forEach(record => {
+                    const row = `<tr>
+                        <td><img src="data:image/jpeg;base64,${record.Photo}" alt="Photo"></td>
+                        <td>${record.Location}</td>
+                        <td>${record.Date}</td>
+                        <td>${record.Time}</td>
+                    </tr>`;
+                    recordsTable.innerHTML += row;
+                });
+
+                table.style.display = 'table';
+            } catch (error) {
+                console.error('Error fetching records:', error);
+                alert('Failed to load records.');
+            }
+        });
+    </script>
+</body>
+</html>
